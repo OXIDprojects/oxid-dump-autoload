@@ -43,11 +43,15 @@ foreach ($modules as $baseClassName => $chain) {
         $lastClassName = $lastClassName ?? $baseClassName;
         $moduleClass = $chainedClassName . '_parent';
         if (!class_exists($moduleClass, false)) {
-            $output .= "class_alias('$lastClassName', '$moduleClass');" . PHP_EOL;
+            $path = explode('\\', $moduleClass);
+            $moduleClass = array_pop($path);
+            $namespace = "";            
+            if (count($path) > 1) {
+              $namespace = join("\\",$path);
+            }
+            $output .= "namespace $namespace { class $moduleClass extends \\$lastClassName {} }" . PHP_EOL;
         }
         $lastClassName = $chainedClassName;
     }
     $lastClassName = null;
 }
-
-file_put_contents('autoload.oxid.php', $output);
