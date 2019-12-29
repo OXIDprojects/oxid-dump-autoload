@@ -6,6 +6,8 @@
             "email": "alfred.bez@googlemail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "oxid-esales/oxideshop-ce": "^v6.2"
+    },,
     "bin": ["bin/oxid-dump-autoload"]
 }
